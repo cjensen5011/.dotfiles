@@ -141,15 +141,15 @@ export PATH="$PATH:$HOME/Library/flutter/bin"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # edit global zsh configuration
-alias zshconfig="vim ~/.zshrc"
+alias zshconfig="nvim ~/.zshrc"
 # reload zsh config
 alias zshsource="source ~/.zshrc"
 # edit global ssh configuration
-alias sshconfig="vim ~/.ssh/config"
+alias sshconfig="nvim ~/.ssh/config"
 # edit global git configuration
-alias gitconfig="vim ~/.gitconfig"
+alias gitconfig="nvim ~/.gitconfig"
 alias vim="nvim ."
-alias ls="ls -la"
+
 # theFuck
 eval $(thefuck --alias)
 # You can use whatever you want as an alias, like for Mondays:

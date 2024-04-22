@@ -3,6 +3,7 @@ return {
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
@@ -16,6 +17,7 @@ return {
     config = function()
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
+        local mason_tool_installer = require("mason-tool-installer")
         local capabilities = vim.tbl_deep_extend(
             "force",
             {},
@@ -28,8 +30,13 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "tsserver",
-                "rust_analyzer",
+                "html",
+                "cssls",
+                "tailwindcss",
+                "graphql",
+                "emmet_ls",
                 "gopls",
+                "omnisharp",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -52,7 +59,34 @@ return {
                         }
                     }
                 end,
+
+                ["omnisharp"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.omnisharp.setup {
+                        capabilities = capabilities,
+                        enable_roslyn_analysers = true,
+                        enable_import_completion = true,
+                        organize_imports_on_format = true,
+                        enable_decompilation_support = true,
+                        filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props', 'csx', 'targets' }
+                    }
+                end,
+
+                ["bicep"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.bicep.setup({
+                        capabilities = capabilities
+                    })
+                end
             }
+        })
+
+        mason_tool_installer.setup({
+            ensure_installed = {
+                "prettier",
+                "stylua",
+                "eslint_d",
+            },
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
