@@ -1,9 +1,9 @@
-require("murdr.set")
-require("murdr.remap")
-require("murdr.lazy_init")
+require("user.set")
+require("user.remap")
+require("user.lazy_init")
 
 local augroup = vim.api.nvim_create_augroup
-local MurdrGroup = augroup('ThePrimeagen', {})
+local UserGroup = augroup('UserGroup', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -30,13 +30,13 @@ autocmd('TextYankPost', {
 })
 
 autocmd({"BufWritePre"}, {
-    group = MurdrGroup,
+    group = UserGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
 
 autocmd('LspAttach', {
-    group = MurdrGroup,
+    group = UserGroup,
     callback = function(e)
         local opts = { buffer = e.buf }
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)

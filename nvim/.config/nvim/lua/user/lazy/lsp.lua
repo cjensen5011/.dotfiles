@@ -35,8 +35,8 @@ return {
                 "tailwindcss",
                 "graphql",
                 "emmet_ls",
-                "gopls",
                 "omnisharp",
+                "svelte",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -105,6 +105,7 @@ return {
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
+                { name = 'tsnip' },
                 { name = 'luasnip' }, -- For luasnip users.
             }, {
                 { name = 'buffer' },
