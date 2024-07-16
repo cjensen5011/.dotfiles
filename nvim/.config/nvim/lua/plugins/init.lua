@@ -1,6 +1,6 @@
-require("user.set")
-require("user.remap")
-require("user.lazy_init")
+require("plugins.set")
+require("plugins.remap")
+require("plugins.lazy_init")
 
 local augroup = vim.api.nvim_create_augroup
 local UserGroup = augroup('UserGroup', {})

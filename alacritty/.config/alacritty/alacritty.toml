@@ -1,0 +1,23 @@
+import = [
+  "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 10
+padding.y = 10
+
+decoractions = "Buttonless"
+
+dimensions.columns = 112
+dimensions.lines = 64
+
+[font]
+normal.family = "Lilex Nerd Font Mono"
+bold.family = "Lilex Nerd Font Mono"
+bold_italic.family = "Lilex Nerd Font Mono"
+italic.family = "Lilex Nerd Font Mono"
+
+size = 16
