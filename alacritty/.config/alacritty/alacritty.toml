@@ -15,9 +15,9 @@ dimensions.columns = 112
 dimensions.lines = 64
 
 [font]
-normal.family = "Lilex Nerd Font Mono"
-bold.family = "Lilex Nerd Font Mono"
-bold_italic.family = "Lilex Nerd Font Mono"
-italic.family = "Lilex Nerd Font Mono"
+normal.family = "JetBrainsMono Nerd Font Mono"
+bold.family = "JetBrainsMono Nerd Font Mono"
+bold_italic.family = "JetBrainsMono Nerd Font Mono"
+italic.family = "JetBrainsMono Nerd Font Mono"
 
 size = 16
