@@ -1,8 +1,13 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+
+local keymap = vim.keymap
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move highlighted block up" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move highlighted block down" })
+
+-- increment/decrement numbers
+keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
+keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
 
 -- keep cursor centered when jumping
 vim.keymap.set("n", "J", "mzJ`z")
@@ -38,10 +43,11 @@ vim.keymap.set("n", "<c-h>", "<:wincmd h<CR>")
 vim.keymap.set("n", "<c-l>", "<:wincmd l<CR>")
 
 -- window management
-vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "split window vertically" })
-vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "split window horizontally" })
-vim.keymap.set("n", "<leader>se", "<C-w>=", { desc = "split equal size" })
-vim.keymap.set("n", "<leader>sx", "<C-w>x", { desc = "close current split" })
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
+keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+-- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+

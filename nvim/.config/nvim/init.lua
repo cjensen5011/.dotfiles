@@ -1,2 +1,2 @@
-require("plugins")
-
+require("user.core")
+require("user.lazy")
