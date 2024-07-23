@@ -9,14 +9,11 @@ return {
     vim.g.loaded_netrwPlugin = 1
 
     nvimtree.setup({
-      diagnostics = {
-        enable = true,
-      },
+      diagnostics = { enable = true },
       view = {
-        width = 35,
+        width = 45,
         relativenumber = true,
       },
-      -- change folder arrow icons
       renderer = {
         indent_markers = {
           enable = true,
@@ -49,8 +46,7 @@ return {
       },
     })
 
-    -- set keymaps
-    local keymap = vim.keymap -- for conciseness
+    local keymap = vim.keymap
 
     keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
     keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
