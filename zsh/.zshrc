@@ -140,15 +140,24 @@ export PATH="$PATH:$HOME/Library/flutter/bin"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
 # edit global zsh configuration
 alias zshconfig="nvim ~/.zshrc"
+
 # reload zsh config
 alias zshsource="source ~/.zshrc"
+
 # edit global ssh configuration
 alias sshconfig="nvim ~/.ssh/config"
+
 # edit global git configuration
 alias gitconfig="nvim ~/.gitconfig"
+
+# neovim
 alias vim="nvim ."
+
+# eza
+alias ls="eza --icons=always"
 
 # theFuck
 eval $(thefuck --alias)

@@ -11,8 +11,8 @@ config.font_size = 16
 config.enable_tab_bar = false
 
 config.window_decorations = "RESIZE"
-config.initial_cols = 120
-config.initial_rows = 60
+config.initial_cols = 112
+config.initial_rows = 64
 
 config.window_background_opacity = 0.9
 config.macos_window_background_blur = 10
