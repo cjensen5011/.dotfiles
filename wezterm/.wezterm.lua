@@ -3,7 +3,7 @@ local config = wezterm.config_builder()
 
 -- configs
 
-config.color_scheme = "catppuccin-mocha"
+config.color_scheme = "Catppuccin Mocha"
 
 config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.font_size = 16
