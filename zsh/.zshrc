@@ -79,7 +79,7 @@ plugins=(
 )
 
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-source /Users/christopherjensen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /Users/murdr/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
 
