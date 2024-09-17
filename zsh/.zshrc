@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -86,7 +79,7 @@ plugins=(
 )
 
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-source /Users/christopherjensen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /Users/murdr/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
 
@@ -140,15 +133,24 @@ export PATH="$PATH:$HOME/Library/flutter/bin"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
 # edit global zsh configuration
 alias zshconfig="nvim ~/.zshrc"
+
 # reload zsh config
 alias zshsource="source ~/.zshrc"
+
 # edit global ssh configuration
 alias sshconfig="nvim ~/.ssh/config"
+
 # edit global git configuration
 alias gitconfig="nvim ~/.gitconfig"
+
+# neovim
 alias vim="nvim ."
+
+# eza
+alias ls="eza --icons=always"
 
 # theFuck
 eval $(thefuck --alias)
@@ -161,5 +163,3 @@ eval "$(rbenv init - zsh)"
 # use starship theme
 eval "$(starship init zsh)"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
