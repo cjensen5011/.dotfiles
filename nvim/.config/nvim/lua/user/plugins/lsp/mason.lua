@@ -21,7 +21,8 @@ return {
 
 		mason_lspconfig.setup({
 			ensure_installed = {
-				"tsserver",
+				"astro",
+				"ts_ls",
 				"html",
 				"cssls",
 				"tailwindcss",
