@@ -117,6 +117,12 @@ return {
 					},
 				})
 			end,
+			["astro"] = function()
+				lspconfig["astro"].setup({
+					capabilities = capabilities,
+					fileTypes = { "astro" },
+				})
+			end,
 			["lua_ls"] = function()
 				-- configure lua server (with special settings)
 				lspconfig["lua_ls"].setup({
