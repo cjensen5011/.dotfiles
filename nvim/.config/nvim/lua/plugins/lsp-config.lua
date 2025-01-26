@@ -51,9 +51,6 @@ return {
 			lspconfig.cssls.setup({
 				capabilities = capabilities,
 			})
-			lspconfig.emmet_ls.setup({
-				capabilities = capabilities,
-			})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "hover" })
 			vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "show definition" })
