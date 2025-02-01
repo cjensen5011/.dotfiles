@@ -94,8 +94,9 @@ alias tmn="tmux new -t"
 alias tmx="tmux kill-session -t"
 alias tmk="tmux kill-session"
 
-alias tml5r="~/tmx-l5r.sh"
-alias tmcw="~/tmx-cw.sh"
+alias tml5r="~/tmux-l5r.sh"
+alias tmcw="~/tmux-cw.sh"
+alias tmwt="~/tmux-wtrtrk.sh"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

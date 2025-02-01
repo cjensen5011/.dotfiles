@@ -12,7 +12,7 @@ vim.opt.smartindent = true
 
 -- lines
 vim.opt.nu = true
-vim. opt.relativenumber = true
+vim.opt.relativenumber = true
 vim.opt.number = true
 
 -- undo stuff
@@ -21,7 +21,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "100"
 
 -- folds
 vim.opt.foldmethod = "indent"
@@ -82,5 +82,3 @@ vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "close current spli
 
 -- some search and replace guru shit
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "find and replace" })
-
-

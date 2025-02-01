@@ -1,25 +1,25 @@
 #!/bin/bash
 
-SESH="cw"
+SESH="wtrtrk"
 
 tmux has-session -t $SESH 2>/dev/null
 
 if [ $? != 0 ]; then
   # window 1
   tmux new-session -d -s $SESH -n "code"
-  tmux send-keys -t $SESH:code "cd ~/dev/cw/chill-warrior/src/apps" C-m
+  tmux send-keys -t $SESH:code "cd ~/dev/wtrtrk" C-m
   tmux send-keys -t $SESH:code "clear" C-m
   tmux send-keys -t $SESH:code "nvim" C-m
 
   # window 2
   tmux new-window -t $SESH -n "run"
-  tmux send-keys -t $SESH:run "cd ~/dev/cw/chill-warrior/src/ChillWarrior.AppHost" C-m
+  tmux send-keys -t $SESH:run "cd ~/dev/wtrtrk" C-m
   tmux send-keys -t $SESH:run "clear" C-m
-  tmux send-keys -t $SESH:run "dotnet run" C-m
+  tmux send-keys -t $SESH:run "npx expo start" C-m
 
   # window 3
   tmux new-window -t $SESH -n "shel"
-  tmux send-keys -t $SESH:shel "cd ~/dev/cw/chill-warrior/src/apps" C-m
+  tmux send-keys -t $SESH:shel "cd ~/dev/wtrtrk" C-m
   tmux send-keys -t $SESH:shel "clear" C-m
 
   # focus window 1
