@@ -73,19 +73,21 @@ export ZSH="$HOME/.oh-my-zsh"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    zsh-completions
-    zsh-autosuggestions
-    zsh-syntax-highlighting
 )
-
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-source /Users/murdr/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-# load zsh-completions
-autoload -U compinit && compinit
+
+HISTFILE=~/.history
+HISTSIZE=1000
+SAVEHIST=50000
+
+# zsh compinit
+autoload -Uz compinit && compinit
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # use nvm
 export NVM_DIR="$HOME/.nvm"
@@ -93,7 +95,7 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # JAVA
-export JAVA_HOME=$(/usr/libexec/java_home)
+# export JAVA_HOME=$(/usr/libexec/java_home)
 
 # Android
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -134,32 +136,37 @@ export PATH="$PATH:$HOME/Library/flutter/bin"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# edit global zsh configuration
-alias zshconfig="nvim ~/.zshrc"
+# alias
+alias zshconfig="nvim ~/.zshrc" # edit global zsh configuration
+alias sshconfig="nvim ~/.ssh/config" # edit global ssh config
+alias sauce="source ~/.zshrc" # reload zsh config
+alias vim="nvim" # use neovim instead of vim
 
-# reload zsh config
-alias zshsource="source ~/.zshrc"
+# tmux
+alias tmls="tmux ls" # list all tmux sessions
+alias tma="tmux a -t" # attach to named tmux session
+alias tmn="tmux new -t" # new tmux session
+alias tmx="tmux kill-session -t" # kill named tmux session
+alias tmk="tmux kill-session" # kill open tmux session
+alias tml5r="~/tmux-l5r.sh" # l5r workspace
+alias tmcw="~/tmux-cw.sh" # chill warrior workspace
+alias tmwt="~/tmux-wtrtrk.sh" # water tracker workspace
 
-# edit global ssh configuration
-alias sshconfig="nvim ~/.ssh/config"
+# git
+alias gitconfig="nvim ~/.gitconfig" # edit global git config
+alias lg="lazygit" # lazygit
+alias ls="eza --icons=always" # eza
 
-# edit global git configuration
-alias gitconfig="nvim ~/.gitconfig"
+# zoxide (better cd)
+eval "$(zoxide init zsh)"
+alias cd="z"
 
-# neovim
-alias vim="nvim ."
+eval $(thefuck --alias) # the fuck
+eval $(thefuck --alias FUCK) # You can use whatever you want as an alias, like for Mondays:
 
-# eza
-alias ls="eza --icons=always"
+eval "$(rbenv init - zsh)" # rbenv ruby version manager
 
-# theFuck
-eval $(thefuck --alias)
-# You can use whatever you want as an alias, like for Mondays:
-eval $(thefuck --alias FUCK)
+eval "$(starship init zsh)" # use starship theme
 
-# rbenv ruby version manager
-eval "$(rbenv init - zsh)"
 
-# use starship theme
-eval "$(starship init zsh)"
-
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
