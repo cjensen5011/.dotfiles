@@ -51,7 +51,7 @@ return {
       },
       sections = {
         lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
-        lualine_b = { 'filename', 'branch', 'diff', 'diagnostics' },
+        lualine_b = { { 'filename', path = 4 }, 'branch', 'diff', 'diagnostics' },
         lualine_c = {
          '=%',
         },

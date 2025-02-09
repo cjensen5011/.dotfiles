@@ -1,15 +1,14 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
+# Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
+# load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
-# ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -71,46 +70,35 @@ export ZSH="$HOME/.oh-my-zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    git
-    zsh-completions
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-)
-
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-source /Users/murdr/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-# load zsh-completions
-autoload -U compinit && compinit
 
-# use nvm
+# nvm
 export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# JAVA
-export JAVA_HOME=$(/usr/libexec/java_home)
+# alias
+alias zshconfig="nvim ~/.zshrc"
+alias sshconfig="nvim ~/.ssh/config"
+alias sauce="source ~/.zshrc"
+alias vim="nvim ."
 
-# Android
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+alias lg="lazygit"
+alias tmls="tmux ls"
+alias tma="tmux a -t"
+alias tmn="tmux new -t"
+alias tmx="tmux kill-session -t"
+alias tmk="tmux kill-session"
+
+alias tml5r="~/tmux-l5r.sh"
+alias tmcw="~/tmux-cw.sh"
+alias tmwt="~/tmux-wtrtrk.sh"
+
 # export MANPATH="/usr/local/man:$MANPATH"
-
-# Go lang
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/go
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOPATH
-export PATH=$PATH:$GOPATH/bin
-
-# Flutter
-export PATH="$PATH:$HOME/Library/flutter/bin"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -119,47 +107,39 @@ export PATH="$PATH:$HOME/Library/flutter/bin"
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# export ARCHFLAGS="-arch $(uname -m)"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# edit global zsh configuration
-alias zshconfig="nvim ~/.zshrc"
-
-# reload zsh config
-alias zshsource="source ~/.zshrc"
-
-# edit global ssh configuration
-alias sshconfig="nvim ~/.ssh/config"
-
-# edit global git configuration
-alias gitconfig="nvim ~/.gitconfig"
-
-# neovim
-alias vim="nvim ."
-
-# eza
+# eza (better ls)
 alias ls="eza --icons=always"
 
-# theFuck
+# the fuck
 eval $(thefuck --alias)
-# You can use whatever you want as an alias, like for Mondays:
-eval $(thefuck --alias FUCK)
 
-# rbenv ruby version manager
-eval "$(rbenv init - zsh)"
-
-# use starship theme
+# starship
 eval "$(starship init zsh)"
 
+# zoxide (better cd)
+eval "$(zoxide init zsh)"
+alias cd="z"
+
+# fzf
+eval "$(fzf --zsh)"
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
