@@ -10,14 +10,15 @@ return {
   { "neovim/nvim-lspconfig", lazy = false },
 
   {
-    "qwilliamboman/mason-lspconfig.nvim",
+    "williamboman/mason-lspconfig.nvim",
     lazy = false,
     config = function()
       local mason_lspconfig = require("mason-lspconfig")
+
       mason_lspconfig.setup({
-        automatic_installation = true, -- or auto_install = true (older)
+        automatic_installation = true, -- older key is auto_install
         ensure_installed = {
-          "ts_ls",
+          "ts_ls",       -- or "vtsls"
           "html",
           "cssls",
           "svelte",
@@ -42,7 +43,6 @@ return {
         vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
       end
 
-      -- per‑server tweaks
       local servers = {
         ruby_lsp = {
           cmd = { vim.fn.expand("~/.asdf/shims/ruby-lsp") },
@@ -57,7 +57,6 @@ return {
         },
       }
 
-      -- fallback opts
       local function setup(server)
         local opts = {
           capabilities = capabilities,
@@ -69,15 +68,9 @@ return {
         lspconfig[server].setup(opts)
       end
 
-      -- If setup_handlers exists, use it; otherwise manual loop
-      if type(mason_lspconfig.setup_handlers) == "function" then
-        mason_lspconfig.setup_handlers({
-          function(server) setup(server) end,
-        })
-      else
-        for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
-          setup(server)
-        end
+      -- Manual loop = works on all versions
+      for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
+        setup(server)
       end
     end,
   },
