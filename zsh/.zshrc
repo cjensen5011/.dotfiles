@@ -1,6 +1,9 @@
 # path to oh my zsh install
 export ZSH="$HOME/.oh-my-zsh"
 
+# neovim
+export EDITOR=nvim
+
 # plugins
 plugins=(git)
 
@@ -16,13 +19,22 @@ SAVEHIST=50000
 export PATH="$HOME/.dotfiles/scripts:$PATH"
 bindkey -s ^f "tmux-sessionizer\n"
 
+# fzf
+eval "$(fzf --zsh)"
+
 # zsh cominit
 autoload -Uz compinit && compinit
 
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"                                       # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"                                       # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+
+# rbenv
+eval "$(rbenv init - zsh)"
 
 # alias
 alias zshconfig="nvim ~/.zshrc"
@@ -30,22 +42,23 @@ alias sshconfig="nvim ~/.ssh/config"
 alias sauce="source ~/.zshrc"
 alias vim="nvim"
 
+# git
 alias lg="lazygit"
-alias tmls="tmux ls"
-alias tma="tmux a -t"
-alias tmn="tmux new -t"
-alias tmx="tmux kill-session -t"
-alias tmk="tmux kill-session"
+alias gitconfig="nvim ~/.gitconfig" # edit global git config
 
-alias tml5r="~/tmux-l5r.sh"
-alias tmcw="~/tmux-cw.sh"
-alias tmwt="~/tmux-wtrtrk.sh"
+# tmux
+alias tmls="tmux ls" # list tmux sessions
+alias tma="tmux a -t" # attach to named tmux session
+alias tmn="tmux new -t" # new tmux session
+alias tmx="tmux kill-session -t" # kill named tmux session
+alias tmk="tmux kill-session" # kill all tmux sessions
+
+# alias tml5r="~/tmux-l5r.sh"
+# alias tmcw="~/tmux-cw.sh"
+# alias tmwt="~/tmux-wtrtrk.sh"
 
 # eza (better ls)
 alias ls="eza -la --icons=always"
-
-# rbenv
-eval "$(rbenv init - zsh)"
 
 # the fuck
 eval $(thefuck --alias)
@@ -57,8 +70,3 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 alias cd="z"
 
-# fzf
-eval "$(fzf --zsh)"
-
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
