@@ -48,7 +48,7 @@ eval "$(rbenv init - zsh)"
 alias zshconfig="nvim ~/.zshrc"
 alias sshconfig="nvim ~/.ssh/config"
 alias sauce="source ~/.zshrc"
-alias vim="nvim"
+alias vim="nvim ."
 
 # git
 alias lg="lazygit"

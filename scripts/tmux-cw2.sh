@@ -1,27 +1,58 @@
 #!/usr/bin/env bash
 
-branch_name=${1:-"main"}
-project_dir="$HOME/dev/cw"
-session_name=$(tmux display-message -p "#S" 2>/dev/null)
+# Enhanced layout combining original behavior (branch handling + shel) with new windows.
+# Windows:
+#  1. code  -> $CODE_DIR (nvim)
+#  2. metro -> $CODE_DIR (expo run:ios)
+#  3. api   -> $API_DIR (dotnet run)
+#  4. shel  -> $ROOT_DIR (general shell, optional branch checkout)
+#
+# Usage: tmux-cw2.sh [branch]
+#   branch (optional): if provided and not 'main', attempts checkout (or create) in shel window.
 
+BRANCH_NAME=${1:-main}
+ROOT_DIR="$HOME/dev/cw"
+CODE_DIR="$HOME/dev/cw/chill-warrior-mobile"
+API_DIR="$HOME/dev/cw/chill-warrior/src/Chillwarrior.AppHost"  # NOTE: kept as given; correct if typo
+SESSIONIZER="$HOME/.dotfiles/scripts/tmux-sessionizer"
+WINDOWIZER="$HOME/.dotfiles/scripts/tmux-windowizer"
+
+if [[ ! -d "$CODE_DIR" ]]; then
+  echo "WARNING: CODE_DIR does not exist: $CODE_DIR" >&2
+fi
+if [[ ! -d "$API_DIR" ]]; then
+  echo "WARNING: API_DIR does not exist: $API_DIR" >&2
+fi
+
+# If not inside tmux, create/switch session rooted at CODE_DIR first
 if [[ -z $TMUX ]]; then
-  echo "nerd type shit..."
-  ~/.dotfiles/scripts/tmuz-sessionizer "$project_dir"
-  exit 0
+  "$SESSIONIZER" "$CODE_DIR"
 fi
 
-tmux rename-window -t "$session_name:zsh" "code"
-tmux send-keys -t "$session_name:code" "cd ~/dev/cw/chill-warrior" C-m
-tmux send-keys -t "$session_name:code" "clear" C-m
-tmux send-keys -t "$session_name:code" "nvim" C-m
+SESSION_NAME=$(tmux display-message -p '#S')
 
-# gneral window
-~/.dotfiles/scripts/tmux-windowizer shel "cd '$project_dir' && clear"
+# Reuse existing first window (often 'zsh' or similar) -> rename to code
+tmux rename-window -t "$SESSION_NAME:0" code 2>/dev/null || tmux rename-window -t "$SESSION_NAME:zsh" code 2>/dev/null
+tmux send-keys -t "$SESSION_NAME:code" "cd '$CODE_DIR'" C-m \; send-keys -t "$SESSION_NAME:code" clear C-m \; send-keys -t "$SESSION_NAME:code" nvim C-m
 
-# if branch name provided, switch to it in relevant windows
-if [[ "$branch_name" != "main" ]]; then
-  echo "switching to branch: $branch_name"
-  tmux send-keys -t "$session_name:shel" "git checkout $branch_name || git checkout -b $branch_name" C-m
+ # Metro window
+"$WINDOWIZER" metro "cd '$CODE_DIR' && clear && npx expo run:ios"
+
+# API window
+"$WINDOWIZER" api "cd '$API_DIR' && clear && dotnet run"
+
+# Shel window (general shell + optional branch checkout)
+"$WINDOWIZER" shel "cd '$CODE_DIR' && clear"
+if [[ "$BRANCH_NAME" != "main" ]]; then
+  tmux send-keys -t "$SESSION_NAME:shel" "echo 'Switching to branch: $BRANCH_NAME'" C-m
+  tmux send-keys -t "$SESSION_NAME:shel" "git fetch --all" C-m
+  tmux send-keys -t "$SESSION_NAME:shel" "git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME" C-m
 fi
 
-tmux select-window -t "$session_name:code"
+# Focus code window when done
+tmux select-window -t "$SESSION_NAME:code"
+
+# If we started outside tmux (initial launch), emit a status line to stderr only (keeps code window clean)
+if [[ -z $TMUX_PARENT ]]; then
+  >&2 echo "Chill Warrior session prepared (code | metro | api | shel)"
+fi
