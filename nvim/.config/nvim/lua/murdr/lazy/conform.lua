@@ -1,6 +1,7 @@
 return {
   "stevearc/conform.nvim",
-  opts = {},
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
   config = function()
     require("conform").setup({
       format_on_save = {
@@ -12,9 +13,19 @@ return {
         cpp = { "clang-format" },
         lua = { "stylua" },
         go = { "gofmt" },
-        javascript = { "prettier" },
-        typescript = { "prettier" },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        typescript = { "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+        json = { "prettierd", "prettier", stop_after_first = true },
+        html = { "prettierd", "prettier", stop_after_first = true },
+        css = { "prettierd", "prettier", stop_after_first = true },
+        scss = { "prettierd", "prettier", stop_after_first = true },
+        markdown = { "prettierd", "prettier", stop_after_first = true },
+        yaml = { "prettierd", "prettier", stop_after_first = true },
         elixir = { "mix" },
+        cs = { "csharpier" },
+        swift = { "swift_format" },
       },
       formatters = {
         ["clang-format"] = {
@@ -22,8 +33,10 @@ return {
         },
       },
     })
+
+    -- Manual format keybind
     vim.keymap.set("n", "<leader>f", function()
       require("conform").format({ bufnr = 0 })
-    end)
+    end, { desc = "Format buffer" })
   end,
 }

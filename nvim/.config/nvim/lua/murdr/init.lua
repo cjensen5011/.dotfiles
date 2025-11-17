@@ -29,10 +29,21 @@ autocmd('TextYankPost', {
     end,
 })
 
+-- Remove trailing whitespace on save (only for existing files)
 autocmd({"BufWritePre"}, {
     group = MurdrGroup,
     pattern = "*",
-    command = [[%s/\s\+$//e]],
+    callback = function()
+        -- Only run if the buffer has a name (not a new unsaved file)
+        if vim.fn.expand("%") ~= "" then
+            -- Save cursor position
+            local save_cursor = vim.fn.getpos(".")
+            -- Remove trailing whitespace
+            vim.cmd([[%s/\s\+$//e]])
+            -- Restore cursor position
+            vim.fn.setpos(".", save_cursor)
+        end
+    end,
 })
 
 autocmd('BufEnter', {
@@ -58,7 +69,7 @@ autocmd('LspAttach', {
         vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
         vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
         vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+        vim.keymap.set("i", "<C-s>", function() vim.lsp.buf.signature_help() end, opts)
         vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
     end

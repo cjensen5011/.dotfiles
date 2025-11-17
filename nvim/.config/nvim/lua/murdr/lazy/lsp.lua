@@ -12,7 +12,6 @@ local root_files = {
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
-        "stevearc/conform.nvim",
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
@@ -26,11 +25,7 @@ return {
     },
 
     config = function()
-        require("conform").setup({
-            formatters_by_ft = {
-            }
-        })
-                -- Diagnostic signs (Neovim 0.10+ style: configure via vim.diagnostic.config)
+        -- Diagnostic signs (Neovim 0.10+ style: configure via vim.diagnostic.config)
                 local diagnostic_signs = {
                     Error = '',
                     Warn  = '',
@@ -52,6 +47,12 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "tailwindcss",
+                "ts_ls",           -- TypeScript/JavaScript
+                "eslint",          -- JavaScript/TypeScript linting
+                "omnisharp",       -- C#/.NET
+                "html",            -- HTML
+                "cssls",           -- CSS
+                "jsonls",          -- JSON
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -100,6 +101,16 @@ return {
                     lspconfig.tailwindcss.setup({
                         capabilities = capabilities,
                         filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "heex" },
+                    })
+                end,
+                ["omnisharp"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.omnisharp.setup({
+                        capabilities = capabilities,
+                        cmd = { "omnisharp" },
+                        enable_roslyn_analyzers = true,
+                        organize_imports_on_format = true,
+                        enable_import_completion = true,
                     })
                 end,
             }
