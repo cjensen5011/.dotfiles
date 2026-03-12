@@ -37,7 +37,7 @@ return {
     lazy = false,
     config = function()
       local dap = require("dap")
-      dap.set_log_level("DEBUG")
+      dap.set_log_level("WARN")
 
       vim.keymap.set("n", "<F8>", dap.continue, { desc = "Debug: Continue" })
       vim.keymap.set("n", "<F10>", dap.step_over, { desc = "Debug: Step Over" })
@@ -137,12 +137,6 @@ return {
       end
       dap.listeners.before.event_exited.dapui_config = function()
         dapui.close()
-      end
-
-      dap.listeners.after.event_output.dapui_config = function(_, body)
-        if body.category == "console" then
-          dapui.eval(body.output) -- Sends stdout/stderr to Console
-        end
       end
     end,
   },

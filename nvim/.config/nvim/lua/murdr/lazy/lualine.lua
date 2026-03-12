@@ -2,11 +2,6 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
-    require("lualine").setup({
-      options = {
-        theme = "catppuccin",
-      },
-    })
     local colors = {
       thm_bg = "#1e1e2e",
       thm_fg = "#cdd6f4",

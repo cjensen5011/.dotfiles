@@ -60,8 +60,8 @@ return {
       local select = require('CopilotChat.select')
 
       chat.setup({
-        -- Use Claude 4.5 Sonnet model (much better than default GPT-3.5)
-        model = 'claude-4.5-sonnet',
+        -- Model to use; run :CopilotChatModels to see all available on your account
+        model = 'claude-3.7-sonnet',
         
         -- Chat window configuration
         window = {
@@ -193,7 +193,6 @@ return {
       
       -- Quick actions without selection
       map('n', '<leader>cm', '<cmd>CopilotChatCommit<cr>', 'Generate commit message')
-      map('n', '<leader>cs', '<cmd>CopilotChatCommitStaged<cr>', 'Commit message (staged)')
       
       -- Use telescope for prompt actions (better UI)
       map('n', '<leader>cp', function()

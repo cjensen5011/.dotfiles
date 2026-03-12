@@ -26,63 +26,70 @@ Personal development environment configuration for macOS: shell (zsh + oh-my-zsh
   lazy-lock.json               Pinned plugin commit hashes
   stylua.toml                  Lua formatting rules
   lua/murdr/                   Namespace root (init.lua, set.lua, remap.lua, lazy_init.lua)
-  lua/murdr/lazy/              Atomic plugin specs (colors, conform, dap, fugitive, golf, init, jai, lsp, neotest, peek, snippets, telescope, tj, treesitter, trouble, undotree)
+  lua/murdr/lazy/              Atomic plugin specs (colors, conform, copilot, dap, fugitive, gitsigns, golf, harpoon, init, lsp, lualine, neotest, peek, snippets, telescope, treesitter, trouble, undotree, which-key)
 /scripts/                      Helper and workflow scripts (tmux automation)
-/starship.toml                 Root starship prompt config
-/starship/.config/starship/    Alternate or duplicate starship config (choose one canonical)
+/starship/.config/starship/    Starship prompt config (symlinked to ~/.config/starship.toml)
 /tmux/.tmux.conf               Core tmux config + plugin list + key bindings
 /tmux/.tmux-cht-*              Lists used by cht.sh helper script
 /tmux/plugins/tpm/             Placeholder for TPM (populated after plugin install)
 /wezterm/.wezterm.lua          WezTerm Lua config (mirrors theme + sizing)
 /zsh/.zshrc                    Shell config, env vars, aliases, tool bootstrap
-/vscode/                       (Currently empty placeholder for VS Code settings)
 ```
 
 ## Neovim (murdr Namespace, Primeagen-Inspired)
 Architecture:
   Entry `init.lua` → `require('murdr')` which loads `set`, `remap`, `lazy_init`.
   Plugin system: lazy.nvim with granular spec files under `lua/murdr/lazy/`:
-    - colors.lua        (theme: Catppuccin + lualine bubble customization)
+    - colors.lua        (theme: Catppuccin Mocha, transparent background)
     - conform.lua       (formatting orchestration, on-save fallback to LSP)
+    - copilot.lua       (Copilot + copilot-cmp + CopilotChat with claude-3.7-sonnet)
     - dap.lua           (nvim-dap + dap-ui + mason-nvim-dap setup & keymaps)
-    - fugitive.lua      (git: fugitive + gitsigns integration)
-    - golf.lua          (practice / editing drills if enabled)
-    - init.lua          (aggregator/import list for other spec files)
-    - jai.lua           (language-specific extras; Jai experiments)
-    - lsp.lua           (mason, mason-lspconfig, lspconfig, cmp stack, capabilities)
-    - neotest.lua       (test runner integration if configured)
-    - peek.lua          (markdown/html preview or similar UI plugin)
-    - snippets.lua      (LuaSnip + friendly snippets & custom snippet loader)
-    - telescope.lua     (fuzzy finding + fzf native optional)
-    - tj.lua            (misc utilities / inspirational configs from TJ / curated extras)
+    - fugitive.lua      (git: vim-fugitive)
+    - gitsigns.lua      (git: gitsigns.nvim with hunk nav, staging, blame)
+    - golf.lua          (practice / editing drills)
+    - harpoon.lua       (file mark/jump, harpoon2 branch)
+    - init.lua          (empty aggregator; lazy.nvim auto-imports siblings)
+    - lsp.lua           (mason, mason-lspconfig, lspconfig, nvim-cmp, copilot-cmp, fidget)
+    - lualine.lua       (statusline with custom Catppuccin bubbles theme)
+    - neotest.lua       (test runner with neotest-golang adapter)
+    - peek.lua          (markdown preview via Deno)
+    - snippets.lua      (LuaSnip + friendly-snippets)
+    - telescope.lua     (fuzzy finding, pinned to 0.1.5)
     - treesitter.lua    (parsers, highlighting, context module)
-    - trouble.lua       (diagnostic/location list UI)
+    - trouble.lua       (diagnostic/location list UI, Trouble v3)
     - undotree.lua      (persistent undo tree toggler)
+    - which-key.lua     (keybinding discovery popup, modern preset, mini.icons)
 
 Key intentional deviations vs the upstream inspiration:
   1. Custom Catppuccin + bubble lualine theme retained.
   2. Tab width standardized at 2.
-  3. Copilot + copilot-cmp + (if present) CopilotChat kept.
+  3. Copilot + copilot-cmp + CopilotChat (claude-3.7-sonnet) kept.
+  4. Which-key added (modern preset, mini.icons).
+  5. Gitsigns added for hunk navigation, staging, and blame.
 
-Removed or intentionally excluded: which-key, toggleterm/lazygit, nvim-lint, external tree plugin (using netrw `<leader>pv`).
+Intentionally excluded: toggleterm/lazygit, nvim-lint, external tree plugin (using netrw `<leader>pv`).
 
 Core behaviors:
   - Formatting: conform (prettierd/prettier, stylua, isort+black, etc.) with LSP fallback.
-  - LSP servers: lua_ls, tsserver, jsonls, yamlls, bashls, html, cssls, emmet_ls, pyright, omnisharp (auto-managed via mason).
+  - LSP servers: lua_ls, rust_analyzer, tailwindcss, ts_ls, eslint, omnisharp, html, cssls, jsonls (auto-managed via mason).
   - Autocommands: yank highlight, equalize splits on resize, close helper buffers with `q`, trim trailing whitespace on save.
   - Diagnostics UI: native + Trouble.
   - Performance: unneeded default runtime plugins disabled via lazy perf settings.
 
 Representative keymaps (leader = space):
-  - Navigation & editing: visual move J/K; centered scroll `<C-d>` / `<C-u>`; preserve paste `<leader>p`; blackhole delete `<leader>D`.
-  - Git: hunk nav `[h` / `]h`, staging & preview `<leader>hs` etc.; fugitive commands `:Git` on demand.
-  - Harpoon (if still configured through another spec): `<leader>ha`, `<leader>hh`, `<leader>h1..4`.
-  - Telescope: `<leader>ff` files, `<leader>fg` live grep, `<leader>fb` buffers, `<leader>fh` help.
-  - LSP: `gd`, `gr`, `K`, `<leader>rn`, `<leader>ca`, diagnostics `[d` / `]d`, float `<leader>ld`.
-  - Trouble: `<leader>xx`, `<leader>xw`, `<leader>xq`, `<leader>xl`.
-  - DAP: `<leader>db`, `<leader>dc`, `<leader>do`, `<leader>di`, `<leader>dr`.
+  - Navigation & editing: visual move J/K; centered scroll `<C-d>` / `<C-u>`; preserve paste `<leader>p`; blackhole delete `<leader>d`.
+  - Git (gitsigns): hunk nav `[h` / `]h`, stage `<leader>hs`, reset `<leader>hr`, stage buffer `<leader>hS`, reset buffer `<leader>hR`, preview `<leader>hp`, blame `<leader>hb`, diff `<leader>hd`.
+  - Git (fugitive): `<leader>gs` status, push/pull in fugitive buffer.
+  - Harpoon: `<leader>a` add, `<leader>hm` menu, `<leader>1..4` slots, `<leader>hp`/`<leader>hn` cycle, `<leader>ht` telescope.
+  - Telescope: `<leader>pf` files, `<leader>ps` grep, `<leader>pws`/`<leader>pWs` word grep, `<C-p>` git files, `<leader>vh` help.
+  - LSP: `gd` definition, `K` hover, `<leader>vws` workspace symbols, `<leader>vd` diagnostic float, `<leader>vca` code action, `<leader>vrr` references, `<leader>vrn` rename, `[d`/`]d` diagnostics.
+  - Trouble: `<leader>tt` workspace diag, `<leader>td` document diag, `<leader>tr` references, `<leader>ts` symbols, `<leader>tS` definitions, `<leader>tq` quickfix, `<leader>tl` loclist, `[t`/`]t` nav.
+  - Neotest: `<leader>nr` run nearest, `<leader>ns` suite, `<leader>nd` debug, `<leader>nv` summary, `<leader>no` output, `<leader>na` all.
+  - DAP: `<F8>` continue, `<F10>` step over, `<F11>` step into, `<F12>` step out, `<leader>b` breakpoint, `<leader>B` conditional, `<leader>D*` UI panels.
+  - Copilot: `<leader>cc` toggle chat, `<leader>ce` explain, `<leader>ct` tests, `<leader>cf` fix, `<leader>cr` review, `<leader>co` optimize, `<leader>cd` docs, `<leader>ca` prompt, `<leader>cm` commit msg.
   - Undo tree: `<leader>u`.
-  - Copilot accept: `<C-l>`.
+  - Format: `<leader>f`.
+  - Which-key: auto-triggers on `<leader>` after 250ms delay.
 
 Future considerations:
   - Optional file explorer (oil.nvim or minimal tree) if netrw feels limiting.
@@ -132,7 +139,7 @@ Most scripts orchestrate tmux sessions/windows for specific projects.
 - Languages: Java (Zulu 17), Android SDK, Node (nvm), Ruby (rbenv). Room to add rustup, go, python (pyenv) if needed.
 
 ## Starship Prompt
-- Two configs present (`/starship.toml` and `/starship/.config/starship/starship.toml`). Clarify canonical source (symlink one to the other) to avoid drift.
+- Single canonical config at `/starship/.config/starship/starship.toml`, symlinked to `~/.config/starship.toml` via stow.
 - Powerline segmented style with Catppuccin palette; modules: OS, username, directory, git, multiple language runtimes (shows only when relevant), docker, time, newline + character.
 - Character symbols themed by mode (vim integration via shell vi-mode if enabled later).
 
@@ -149,17 +156,15 @@ Most scripts orchestrate tmux sessions/windows for specific projects.
 ## Potential Missing Pieces / Assumptions
 - No bootstrap/install script for new machine (consider adding `install.sh` using `stow` or `chezmoi`).
 - `tpm` directory empty—plugins fetched after first tmux run via `<prefix> + I`.
-- No VS Code settings yet—could add `settings.json`, extensions list.
 - No global language version managers beyond what's in shell; may want standardization (pyenv, goenv, mise).
 
 ## Suggested Future Enhancements
 1. Add `scripts/bootstrap.sh` to install Homebrew packages, fonts, clone repos, link configs.
-2. Consolidate starship config path and document symlink strategy.
-3. Add CI lint (e.g., shellcheck scripts) and formatting (Stylua config adjustments, maybe `.editorconfig`).
-4. Add Neovim plugin for session/project nav (e.g., telescope project) integrated with tmux-sessionizer.
-5. Replace legacy tmux project scripts (`tmux-cw.sh`, `tmux-wtrtrk.sh`) with parametric approach.
-6. Add README upgrade: Quickstart + screenshot.
-7. Fix shebang in `tmux-cht.sh` and add executable bit check guidance.
+2. Add CI lint (e.g., shellcheck scripts) and formatting (Stylua config adjustments, maybe `.editorconfig`).
+3. Add Neovim plugin for session/project nav (e.g., telescope project) integrated with tmux-sessionizer.
+4. Replace legacy tmux project scripts (`tmux-cw.sh`, `tmux-wtrtrk.sh`) with parametric approach.
+5. Add README upgrade: Quickstart + screenshot.
+6. Fix shebang in `tmux-cht.sh` and add executable bit check guidance.
 
 ## AI Usage Guidance
 When asking the AI to modify environment:
@@ -177,4 +182,4 @@ Example Prompt:
 - New Aliases/Env Vars? -> Summarize under Shell section.
 
 ---
-Last updated: 2025-09-15 (Granular murdr plugin specs inventory refreshed)
+Last updated: 2026-03-12 (Fixed which-key, Trouble v3 modes, keymap conflicts; added gitsigns; refreshed plugin inventory)
