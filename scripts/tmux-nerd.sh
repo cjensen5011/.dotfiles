@@ -6,7 +6,7 @@ session_name=$(tmux display-message -p "#S" 2>/dev/null)
 
 if [[ -z $TMUX ]]; then
   echo "nerd type shit..."
-  ~/.dotfiles/scripts/tmuz-sessionizer "$project_dir"
+  ~/.dotfiles/scripts/tmux-sessionizer "$project_dir"
   exit 0
 fi
 

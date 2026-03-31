@@ -1,12 +1,10 @@
+-- Custom lualine bubbles theme using Catppuccin Mocha palette
+-- Preserves the exact look from the previous (murdr) config
+
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function()
-    require("lualine").setup({
-      options = {
-        theme = "catppuccin",
-      },
-    })
+  event = "VeryLazy",
+  opts = function()
     local colors = {
       thm_bg = "#1e1e2e",
       thm_fg = "#cdd6f4",
@@ -30,12 +28,10 @@ return {
         b = { fg = colors.thm_white, bg = colors.thm_gray },
         c = { fg = colors.thm_white },
       },
-
       insert = { a = { fg = colors.thm_black, bg = colors.thm_blue } },
       visual = { a = { fg = colors.thm_black, bg = colors.thm_cyan } },
       replace = { a = { fg = colors.thm_black, bg = colors.thm_red } },
       command = { a = { fg = colors.thm_black, bg = colors.thm_orange } },
-
       inactive = {
         a = { fg = colors.thm_white, bg = colors.thm_black },
         b = { fg = colors.thm_white, bg = colors.thm_black },
@@ -43,22 +39,20 @@ return {
       },
     }
 
-    require("lualine").setup({
+    return {
       options = {
         theme = bubbles_theme,
         component_separators = "",
-        section_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
       },
       sections = {
-        lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+        lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
         lualine_b = { "filename", "branch", "diff", "diagnostics" },
-        lualine_c = {
-          "=%",
-        },
+        lualine_c = { "=%", },
         lualine_x = {},
         lualine_y = { "encoding", "fileformat", "filetype", "progress" },
         lualine_z = {
-          { "location", separator = { right = "" }, left_padding = 2 },
+          { "location", separator = { right = "" }, left_padding = 2 },
         },
       },
       inactive_sections = {
@@ -71,6 +65,6 @@ return {
       },
       tabline = {},
       extensions = {},
-    })
+    }
   end,
 }
