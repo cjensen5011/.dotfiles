@@ -4,7 +4,7 @@
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
-  opts = function()
+  opts = function(_, opts)
     local colors = {
       thm_bg = "#1e1e2e",
       thm_fg = "#cdd6f4",
@@ -39,32 +39,35 @@ return {
       },
     }
 
-    return {
-      options = {
-        theme = bubbles_theme,
-        component_separators = "",
-        section_separators = { left = "", right = "" },
-      },
-      sections = {
-        lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-        lualine_b = { "filename", "branch", "diff", "diagnostics" },
-        lualine_c = { "=%", },
-        lualine_x = {},
-        lualine_y = { "encoding", "fileformat", "filetype", "progress" },
-        lualine_z = {
-          { "location", separator = { right = "" }, left_padding = 2 },
-        },
-      },
-      inactive_sections = {
-        lualine_a = { "filename" },
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = { "location" },
-      },
-      tabline = {},
-      extensions = {},
+    opts.options = opts.options or {}
+    opts.sections = opts.sections or {}
+    opts.inactive_sections = opts.inactive_sections or {}
+
+    opts.options.theme = bubbles_theme
+    opts.options.component_separators = ""
+    opts.options.section_separators = { left = "", right = "" }
+
+    opts.sections.lualine_a = {
+      { "mode", separator = { left = "" }, right_padding = 2 },
     }
+    opts.sections.lualine_b = { "filename", "branch", "diff", "diagnostics" }
+    opts.sections.lualine_c = { "=%" }
+    opts.sections.lualine_x = {}
+    opts.sections.lualine_y = { "encoding", "fileformat", "filetype", "progress" }
+    opts.sections.lualine_z = {
+      { "location", separator = { right = "" }, left_padding = 2 },
+    }
+
+    opts.inactive_sections.lualine_a = { "filename" }
+    opts.inactive_sections.lualine_b = {}
+    opts.inactive_sections.lualine_c = {}
+    opts.inactive_sections.lualine_x = {}
+    opts.inactive_sections.lualine_y = {}
+    opts.inactive_sections.lualine_z = { "location" }
+
+    opts.tabline = {}
+    opts.extensions = {}
+
+    return opts
   end,
 }
